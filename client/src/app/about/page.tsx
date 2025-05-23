@@ -34,7 +34,7 @@ export default function About() {
         </h1>
 
         <p className="fade-in text-lg text-gray-300">
-          <strong>Level Up Gaming Lounge</strong> isn’t just a gaming venue — it’s your ultimate entertainment hub. We blend the thrill of competitive play with spaces designed for comfort, chill, and connection. From high-end setups to cozy lounges, we’ve built an experience around how gamers truly want to play and relax.
+          <strong>Level Up Gaming Lounge</strong> isn&rsquo;t just a gaming venue &mdash; it&rsquo;s your ultimate entertainment hub. We blend the thrill of competitive play with spaces designed for comfort, chill, and connection. From high-end setups to cozy lounges, we’ve built an experience around how gamers truly want to play and relax.
         </p>
 
         <p className="fade-in text-md text-gray-400">
