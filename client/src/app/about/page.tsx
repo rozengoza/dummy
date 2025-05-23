@@ -30,7 +30,7 @@ export default function About() {
     >
       <div className="max-w-4xl mx-auto space-y-10">
         <h1 className="fade-in text-4xl font-bold tracking-tight text-center sm:text-left">
-          About Level Up Gaming Lounge
+          Level Up Gaming Lounge
         </h1>
 
         <p className="fade-in text-lg text-gray-300">
