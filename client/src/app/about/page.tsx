@@ -28,6 +28,7 @@ export default function About() {
       ref={containerRef}
       className="min-h-screen bg-gray-900 text-white px-6 py-16 sm:px-12 lg:px-32"
     >
+        asdasdaasdasdas
     </div>
   );
 }

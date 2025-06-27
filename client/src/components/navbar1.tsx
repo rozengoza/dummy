@@ -54,7 +54,7 @@ interface NavbarProps {
 
 const Navbar = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
+    url: "/#",
     src: "/images/Level-up-logo.png",
     alt: "logo",
     title: "Level Up Gaming",
