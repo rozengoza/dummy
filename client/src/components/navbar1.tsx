@@ -57,6 +57,7 @@ const Navbar = ({
     url: "https://www.shadcnblocks.com",
     src: "/images/Level-up-logo.png",
     alt: "logo",
+    title: "Level Up Gaming",
   },
   menu = [
     { title: "HOME", url: "#" },
