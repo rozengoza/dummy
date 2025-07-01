@@ -1,5 +1,5 @@
 import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
-
+import { SectionContainer } from "./layout/SectionContainer";
 import {
   Accordion,
   AccordionContent,
@@ -125,12 +125,10 @@ const Navbar = ({
   },
 }: NavbarProps) => {
   return (
-    <section className="py-4">
-      <div className="container">
+    <SectionContainer as="header" className="py-4">
         {/* Desktop Menu */}
         <nav className="hidden justify-around lg:flex">
           <div className="flex items-center gap-6">
-            {/* Logo */}
             <a href={logo.url} className="flex items-center gap-2">
               <img src={logo.src} className="max-h-8" alt={logo.alt} />
             </a>
@@ -155,7 +153,6 @@ const Navbar = ({
         {/* Mobile Menu */}
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
-            {/* Logo */}
             <a href={logo.url} className="flex items-center gap-2">
               <img src={logo.src} className="max-h-8" alt={logo.alt} />
             </a>
@@ -195,8 +192,7 @@ const Navbar = ({
             </Sheet>
           </div>
         </div>
-      </div>
-    </section>
+    </SectionContainer>
   );
 };
 
