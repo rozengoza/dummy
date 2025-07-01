@@ -20,21 +20,18 @@ const Hero = () => {
     <SectionContainer ref={scope} as="section" className="py-4">
       <div className="grid items-center gap-8 bg-muted-2 lg:grid-cols-2">
         <div className="flex flex-col items-center p-16 text-center lg:items-start lg:text-left">
-          <p>New Release</p>
           <h1 className="hero-heading my-6 text-4xl font-bold text-pretty lg:text-6xl">
-            Welcome to Our Website
+            Welcome to Level Up Gaming Lounge
           </h1>
           <p className="mb-8 max-w-xl text-muted-foreground lg:text-xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Elig
-            doloremque mollitia fugiat omnis! Porro facilis quo animi
-            consequatur. Explicabo.
+            Step inside a world designed to elevate your play and ignite your passion — where every match, every challenge, and every hangout feels extraordinary.
           </p>
           <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
             <Button>
-              Primary
+              Get Started
               <ArrowRight className="size-4" />
             </Button>
-            <Button variant="outline">Secondary</Button>
+            <Button variant="outline">Services</Button>
           </div>
         </div>
         <Image

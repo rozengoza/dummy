@@ -31,30 +31,28 @@ interface FooterProps {
 
 const defaultSections = [
   {
-    title: "Product",
+    title: "Services",
     links: [
-      { name: "Overview", href: "#" },
-      { name: "Pricing", href: "#" },
-      { name: "Marketplace", href: "#" },
-      { name: "Features", href: "#" },
+      { name: "PC Games", href: "#" },
+      { name: "PS5", href: "#" },
+      { name: "Netflix & Chill", href: "#" },
+      { name: "Rentals", href: "#" },
+      { name: "Tournament Hosting", href: "#" },
     ],
   },
   {
-    title: "Company",
+    title: "Cafeteria",
+    links: [
+      { name: "Snacks & Drinks", href: "#" },
+      { name: "Cafe", href: "#" },
+    ],
+  },
+  {
+    title: "Helpful Links",
     links: [
       { name: "About", href: "#" },
-      { name: "Team", href: "#" },
-      { name: "Blog", href: "#" },
-      { name: "Careers", href: "#" },
-    ],
-  },
-  {
-    title: "Resources",
-    links: [
-      { name: "Help", href: "#" },
-      { name: "Sales", href: "#" },
-      { name: "Advertise", href: "#" },
-      { name: "Privacy", href: "#" },
+      { name: "Bookings", href: "#" },
+      { name: "Contact", href: "#" },
     ],
   },
 ];
@@ -78,7 +76,7 @@ const Footer = ({
     title: "Level Up Gaming Lounge",
   },
   sections = defaultSections,
-  description = "A collection of components for your startup business or side project.",
+  description = "Join Kathmandu’s gaming revolution — where the latest tech, immersive experiences, and passionate gamers come together to redefine play.",
   socialLinks = defaultSocialLinks,
   copyright = "© 2025 level-up-gaming-lounge.netlify.app. All rights reserved.",
   legalLinks = defaultLegalLinks,
