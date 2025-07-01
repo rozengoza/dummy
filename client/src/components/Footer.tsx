@@ -1,8 +1,8 @@
 import React from "react";
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 import { SectionContainer } from "./layout/SectionContainer";
 import Image from "next/image";
-import HeroImg from "@/assets/images/landing/hero.png";
+import LevelUpGamingLogoSmall from "@/assets/images/Level-Up-Gaming-Logo-Small.jpeg";
 import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 interface FooterProps {
@@ -60,10 +60,9 @@ const defaultSections = [
 ];
 
 const defaultSocialLinks = [
-  { icon: <FaInstagram className="size-5" />, href: "#", label: "Instagram" },
-  { icon: <FaFacebook className="size-5" />, href: "#", label: "Facebook" },
-  { icon: <FaTwitter className="size-5" />, href: "#", label: "Twitter" },
-  { icon: <FaLinkedin className="size-5" />, href: "#", label: "LinkedIn" },
+  { icon: <FaInstagram className="size-5" />, href: "https://www.instagram.com/levelupgaminglou.nge/?hl=en", label: "Instagram" },
+  { icon: <FaFacebook className="size-5" />, href: "https://www.facebook.com/levelupgaminglounge11/", label: "Facebook" },
+  { icon: <FaTiktok className="size-5" />, href: "https://www.tiktok.com/@levelupgaminglounge", label: "Twitter" },
 ];
 
 const defaultLegalLinks = [
@@ -74,14 +73,14 @@ const defaultLegalLinks = [
 const Footer = ({
   logo = {
     url: "/",
-    src: HeroImg,
+    src: LevelUpGamingLogoSmall,
     alt: "Level-Up-Gaming-Logo",
     title: "Level Up Gaming Lounge",
   },
   sections = defaultSections,
   description = "A collection of components for your startup business or side project.",
   socialLinks = defaultSocialLinks,
-  copyright = "© 2024 Shadcnblocks.com. All rights reserved.",
+  copyright = "© 2025 level-up-gaming-lounge.netlify.app. All rights reserved.",
   legalLinks = defaultLegalLinks,
 }: FooterProps) => {
   return (
@@ -92,14 +91,7 @@ const Footer = ({
             {/* Logo */}
             <div className="flex items-center gap-2 lg:justify-start">
               <a href={logo.url}>
-                <Image
-                  src={HeroImg}
-                  alt={logo.alt}
-                  title={logo.title}
-                  width={104}
-                  height={45}
-                  className="object-contain"
-                />
+                <Image src={logo.src} width={50} height={50} alt={logo.alt} className="rounded-full object-cover"/>
               </a>
               <h2 className="text-xl font-semibold">{logo.title}</h2>
             </div>

@@ -22,8 +22,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
-
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import LevelUpGamingLogoSmall from "@/assets/images/Level-Up-Gaming-Logo-Small.jpeg";
+import  Image from "next/image";
 interface MenuItem {
   title: string;
   url: string;
@@ -35,7 +36,7 @@ interface MenuItem {
 interface NavbarProps {
   logo?: {
     url: string;
-    src: string;
+    src: string | StaticImport;
     alt: string;
     title: string;
   };
@@ -54,9 +55,9 @@ interface NavbarProps {
 
 const Navbar = ({
   logo = {
-    url: "/#",
-    src: "/images/Level-up-logo.png",
-    alt: "logo",
+    url: "/",
+    src: LevelUpGamingLogoSmall,
+    alt: "Level-Up-Gaming-Logo",
     title: "Level Up Gaming",
   },
   menu = [
@@ -130,7 +131,7 @@ const Navbar = ({
         <nav className="hidden justify-around lg:flex">
           <div className="flex items-center gap-6">
             <a href={logo.url} className="flex items-center gap-2">
-              <img src={logo.src} className="max-h-8" alt={logo.alt} />
+              <Image src={logo.src} width={60} height={60} alt={logo.alt} className="rounded-full object-cover"/>
             </a>
             <div className="flex items-center">
               <NavigationMenu>
@@ -154,7 +155,7 @@ const Navbar = ({
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
             <a href={logo.url} className="flex items-center gap-2">
-              <img src={logo.src} className="max-h-8" alt={logo.alt} />
+              <Image src={logo.src} width={100} height={32} alt={logo.alt} />
             </a>
             <Sheet>
               <SheetTrigger asChild>
@@ -166,7 +167,7 @@ const Navbar = ({
                 <SheetHeader>
                   <SheetTitle>
                     <a href={logo.url} className="flex items-center gap-2">
-                      <img src={logo.src} className="max-h-8" alt={logo.alt} />
+                     <Image src={logo.src} width={100} height={32} alt={logo.alt} />
                     </a>
                   </SheetTitle>
                 </SheetHeader>

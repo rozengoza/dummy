@@ -14,6 +14,7 @@ const Hero34 = () => {
 
   useGSAP(() => {
     fadeInUp(".hero-heading", 0);
+    fadeInUp(".hero-background", 0);
   }, { scope });
   return (
     <SectionContainer ref={scope} as="section" className="py-4">
@@ -39,7 +40,7 @@ const Hero34 = () => {
         <Image
           src={HeroImg}
           alt="placeholder hero"
-          className="h-full w-full object-cover"
+          className="hero-background h-full w-full object-cover"
           priority
           sizes="(max-width: 1024px) 100vw, 50vw"
         />
