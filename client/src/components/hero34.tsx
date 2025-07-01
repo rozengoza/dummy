@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import HeroImg from "@/assets/images/landing/hero.png"
 import { ArrowRight } from "lucide-react";
