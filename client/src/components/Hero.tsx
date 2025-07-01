@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { SectionContainer } from "@/components/layout/SectionContainer";
 import { fadeInUp } from "@/lib/gsapAnimations";
 import { useGSAP } from "@gsap/react";
-const Hero34 = () => {
+const Hero = () => {
 
   const scope = useRef(null);
 
@@ -49,4 +49,4 @@ const Hero34 = () => {
   );
 };
 
-export { Hero34 };
+export { Hero };

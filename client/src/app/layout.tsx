@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Level Up Gaming Lounge",
   description: "Level Up Your Play, Elevate Your Experience.",
+   icons: {
+    icon: "/Level-Up-Gaming-Logo-Small.jpeg", 
+  },
 };
 
 export default function RootLayout({
