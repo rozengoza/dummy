@@ -5,7 +5,7 @@ import Netflix from "@/assets/images/services/netflix.png";
 import Snacks from "@/assets/images/services/snacks.png";
 import Image from "next/image";
 // import { StaticImport } from "next/dist/shared/lib/get-img-props";
-const Feature74 = () => {
+const ServicesSection = () => {
   return (
     <section className="py-32 w-full px-4 xl:px-[8%] max-w-[1600px] mx-auto">
       <div className="container flex flex-col gap-16 lg:px-16">
@@ -99,4 +99,4 @@ const Feature74 = () => {
   );
 };
 
-export { Feature74 };
+export { ServicesSection };

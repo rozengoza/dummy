@@ -6,7 +6,7 @@ import HeroImg from "@/assets/images/landing/hero.png";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionContainer } from "@/components/layout/SectionContainer";
-import { fadeInUp } from "@/lib/gsapAnimations";
+import { fadeInUp, splitTextAnimation } from "@/lib/gsapAnimations";
 import { useGSAP } from "@gsap/react";
 
 interface HeroContent {
@@ -42,11 +42,20 @@ interface HeroProps {
 }
 
 const Hero = ({ content = defaultHeroContent }: HeroProps) => {
-  const scope = useRef(null);
+  const scope = useRef<HTMLElement | null>(null);
 
   useGSAP(() => {
-    fadeInUp(".hero-heading", 0);
     fadeInUp(".hero-background", 0);
+
+    const heading =  scope.current?.querySelector(".hero-heading") as HTMLElement;
+    if(heading){
+      const {split,animation} = splitTextAnimation(heading,"words","fromTop");
+
+      return () => {
+        split.revert();
+        animation.revert();
+      };
+    }
   }, { scope });
 
   return (
