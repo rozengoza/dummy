@@ -6,7 +6,7 @@ import HeroImg from "@/assets/images/landing/hero.png";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionContainer } from "@/components/layout/SectionContainer";
-import { fadeInUp, splitTextAnimation } from "@/lib/gsapAnimations";
+import { fadeInUp, splitTextAnimation, ScrollTrigger } from "@/lib/gsapAnimations";
 import { useGSAP } from "@gsap/react";
 
 interface HeroContent {
@@ -44,18 +44,46 @@ interface HeroProps {
 const Hero = ({ content = defaultHeroContent }: HeroProps) => {
   const scope = useRef<HTMLElement | null>(null);
 
+  const createTrigger = (heading: HTMLElement, animationType: "fromTop" | "fromRight" | "rotateLines") => {
+    let split: ReturnType<typeof splitTextAnimation>["split"];
+    let animation: gsap.core.Tween;
+
+    return ScrollTrigger.create({
+      trigger: heading,
+      start: "top 80%",
+      onEnter: () => {
+        if (split) split.revert();
+        const { split: newSplit, animation: newAnimation } = splitTextAnimation(heading, "words", animationType);
+        split = newSplit;
+        animation = newAnimation;
+        animation.play();
+
+      },
+      onEnterBack: () => {
+        if (split) split.revert();
+        const { split: newSplit, animation: newAnimation } = splitTextAnimation(heading, "words", animationType);
+        split = newSplit;
+        animation = newAnimation;
+        animation.play();
+      },
+      onLeave: () => {
+        if (split) split.revert();
+      },
+    })
+  }
+
+
   useGSAP(() => {
     fadeInUp(".hero-background", 0);
 
-    const heading =  scope.current?.querySelector(".hero-heading") as HTMLElement;
-    if(heading){
-      const {split,animation} = splitTextAnimation(heading,"words","fromTop");
+    const heading = scope.current?.querySelector(".hero-heading") as HTMLElement;
+    if (!heading) return;
 
-      return () => {
-        split.revert();
-        animation.revert();
-      };
+    const trigger = createTrigger(heading, "fromTop");
+    return () => {
+      trigger.kill();
     }
+
   }, { scope });
 
   return (

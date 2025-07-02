@@ -2,7 +2,8 @@ import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
-
+type AnimationType = "fromRight" | "fromTop" | "rotateLines";
+export { ScrollTrigger }
 export const fadeInUp = (target: gsap.TweenTarget, delay = 0, y = 40) => {
     return gsap.fromTo(
         target,
@@ -20,17 +21,17 @@ export const fadeInUp = (target: gsap.TweenTarget, delay = 0, y = 40) => {
 export const splitTextAnimation = (
     target: HTMLElement,
     type: "chars" | "words" | "lines",
-    animationType: "fromRight" | "fromTop" | "rotateLines"
+    animationType: AnimationType
 ): {
     split: SplitText,
     animation: gsap.core.Tween;
 } => {
     const split = SplitText.create(target, { type: "chars, words, lines" });
-    const aniMap = {
+    const aniMap: Record<AnimationType, () => gsap.core.Tween> = {
         fromRight: () =>
             gsap.from(split.chars, {
                 x: 150,
-                opcaity: 0,
+                opacity: 0,
                 duration: 0.7,
                 ease: "power4",
                 stagger: 0.04
@@ -57,5 +58,5 @@ export const splitTextAnimation = (
 
     const animation = aniMap[animationType]();
 
-    return { split, animation};
+    return { split, animation };
 }
