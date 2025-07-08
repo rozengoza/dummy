@@ -149,7 +149,7 @@ const Navbar = ({
             </NavigationMenu>
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2" >
           <Button asChild variant="outline" size="sm">
             <a href={auth.login.url}>{auth.login.title}</a>
           </Button>

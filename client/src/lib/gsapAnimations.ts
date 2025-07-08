@@ -3,7 +3,8 @@ import { ScrollTrigger, SplitText } from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 type AnimationType = "fromRight" | "fromTop" | "rotateLines";
-export { ScrollTrigger }
+export { gsap, ScrollTrigger, SplitText };
+
 export const fadeInUp = (target: gsap.TweenTarget, delay = 0, y = 40) => {
     return gsap.fromTo(
         target,

@@ -1,12 +1,13 @@
 import { Hero } from "@/components/Hero";
 import { ServicesSection } from "@/components/ServicesSection";
-// import { Gallery6 } from "@/components/gallery6";
+import { Gallery } from "@/components/gallery";
+import ScrollSmootherProvider from "@/lib/scrollSmootherProvider";
 export default function Home() {
   return (
     <>
     <Hero />
     <ServicesSection />
-    {/* <Gallery6/> */}
+    <Gallery/>
     </>
   );
 }

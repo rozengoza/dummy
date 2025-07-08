@@ -25,7 +25,7 @@ interface Gallery6Props {
   items?: GalleryItem[];
 }
 
-const Gallery6 = ({
+const Gallery = ({
   heading = "Gallery",
   demoUrl = "https://www.shadcnblocks.com",
   items = [
@@ -182,4 +182,4 @@ const Gallery6 = ({
   );
 };
 
-export { Gallery6 };
+export { Gallery };
