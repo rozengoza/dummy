@@ -10,8 +10,10 @@ const port = process.env.PORT;
 const app = express();
 
 connect();
+app.use(cors({
+  origin: "http://localhost:3000"
+}));
 app.use(express.json());
-app.use(cors());
 app.use(userRouter);
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
