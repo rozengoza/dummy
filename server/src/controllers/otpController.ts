@@ -11,7 +11,7 @@ export async function requestOTP(email: string): Promise<void> {
     await sendVerificationCode(email, otp);
 }
 
-export async function verifyOTP(email: string, userOTP: string): Promise<boolean> {
+export async function verifyOtpService(email: string, userOTP: string): Promise<boolean> {
     const record = await OTP.findOne({ email }).sort({ createdAt: -1 });
     if(!record){
         throw new Error("OTP not found or expired");

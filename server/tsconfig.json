@@ -8,6 +8,12 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    "baseUrl": "src",
+    "paths": {
+      "@controllers/*": ["controllers/*"],
+      "@models/*": ["models/*"],
+      "@utils/*": ["utils/*"],
+    }
   },
   "ts-node": {
     "esm": true

@@ -157,6 +157,8 @@ const Gallery = ({
                           <Image
                             src={item.image}
                             alt={item.title}
+                            width={100}
+                            height={100}
                             className="h-full w-full object-cover object-center"
                           />
                         </div>

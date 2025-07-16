@@ -5,13 +5,14 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
     id: {
         type: String,
-        default: () => nanoid(10),
         unique: true,
+        index: true,
     },
     email: {
         type: String,
         lowercase: true,
         unique: true,
+        required: true,
         trim: true,
         match: [
             /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -22,16 +23,17 @@ const userSchema = new Schema({
         type: String,
         unique: true,
         trim: true,
+        sparse: true,
         match: [/^\+?[1-9]\d{1,14}$/, "Please enter a valid phone number"],
     },
-    name: String,
-    role: String,
-    avatar: String,
-    password: String,
-    isActive: {
+    password: {
+        type: String,
+        required: true
+    },
+    isEmailVerified: {
         type: Boolean,
-        default: true,
-    }
+        default: false,
+    },
 });
 
 const User = mongoose.model("User", userSchema);
