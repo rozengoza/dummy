@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "start": "node --loader ts-node/esm src/index.ts"
+    "start": "node --loader ts-node/esm src/index.ts",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
