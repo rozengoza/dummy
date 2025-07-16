@@ -138,7 +138,13 @@ export const login = async (req: Request, res: Response) => {
     }
 };
 
-export const fetchUsers = async (  res: Response) => {
+export const fetchUsers = async (req: Request, res: Response) => {
+  try {
+    const param = req || {};
+    console.log(param);
     const data = await User.find();
-    return res.send(data);
+    return res.status(200).json(data);
+  } catch (err) {
+    return res.status(500).json({ error: "Failed to fetch users" });
+  }
 };
