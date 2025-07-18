@@ -62,7 +62,7 @@ const Navbar = ({
     title: "Level Up Gaming",
   },
   menu = [
-    { title: "HOME", url: "#" },
+    { title: "HOME", url: "/" },
     {
       title: "SERVICES",
       url: "#",
@@ -123,8 +123,8 @@ const Navbar = ({
     },
   ],
   auth = {
-    login: { title: "Login", url: "#" },
-    signup: { title: "Sign up", url: "#" },
+    login: { title: "Login", url: "/login" },
+    signup: { title: "Sign up", url: "/signup" },
   },
 }: NavbarProps) => {
   return (

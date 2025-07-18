@@ -1,0 +1,5 @@
+export const LOGIN_URL  = '/login'
+export const REGISTER_URL  = '/register'
+export const SEND_VERIFICATION_CODE_URL  = '/send-verification-code'
+export const VERIFY_OTP_URL  = '/send-/verify-otp-code'
+export const GET_USERS_URL = '/users'

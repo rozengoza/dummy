@@ -16,11 +16,11 @@ const ScrollSmootherProvider: React.FC<ScrollSmootherProviderProps> = ({ childre
     const wrapper = useRef<HTMLDivElement>(null)
     const smoother = useRef<ScrollSmoother | null>(null)
 
-    const scrollTo = () => {
-        if (smoother.current) {
-            smoother.current.scrollTo('.box-c', true, 'center center')
-        }
-    }
+    // const scrollTo = () => {
+    //     if (smoother.current) {
+    //         smoother.current.scrollTo('.box-c', true, 'center center')
+    //     }
+    // }
     useGSAP(() => {
         if (!smoother.current && wrapper.current) {
             smoother.current = ScrollSmoother.create({
