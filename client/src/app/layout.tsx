@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import {Navbar} from "../components/Navbar";
+import { Navbar } from "../components/Navbar";
 import { Footer } from "@/components/Footer";
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from "@/context/AuthContext";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -17,8 +20,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Level Up Gaming Lounge",
   description: "Level Up Your Play, Elevate Your Experience.",
-   icons: {
-    icon: "/Level-Up-Gaming-Logo-Small.jpeg", 
+  icons: {
+    icon: "/Level-Up-Gaming-Logo-Small.jpeg",
   },
 };
 
@@ -48,11 +51,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar/>
-        <main>
-          {children}
-        </main>
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <Toaster position="top-center" />
+          <main>
+            {children}
+          </main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

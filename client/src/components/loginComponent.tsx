@@ -38,7 +38,10 @@ const LoginComponent = ({
 
     try {
       const res = await login(formValues);
+      console.log(res);
       toast.success(res?.message);
+      localStorage.setItem("authToken", res.authToken);
+      localStorage.setItem("user", JSON.stringify(res.user));
     } catch (err) {
       if (axios.isAxiosError(err)) {
         toast.error(err?.response?.data?.error);
