@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { login as loginAPI } from '@/services/api/auth';
 import type { LoginRequest, LoginResponse } from '@/types/auth';
 import type { AxiosErrorResponse } from '@/types/api';
@@ -57,9 +57,24 @@ const authSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(loginUser.pending, (state) => {
+        builder
+        .addCase(loginUser.pending, (state) => {
             state.isLoading = true;
             state.error = null; 
         })
+        .addCase(loginUser.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.user = action.payload.user;
+            state.token = action.payload.authToken;
+            state.isAuth = true;
+
+        })
+        .addCase(loginUser.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload || 'Login Failed';
+        })
     }
 })
+
+export const { logout } = authSlice.actions;
+export default authSlice.reducer;

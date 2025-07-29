@@ -1,3 +1,5 @@
+'use client';
+
 import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
 import { SectionContainer } from "./layout/SectionContainer";
 import {
@@ -25,6 +27,12 @@ import {
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import LevelUpGamingLogoSmall from "@/assets/images/Level-Up-Gaming-Logo-Small.jpeg";
 import Image from "next/image";
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/lib/store';
+import { logout } from "@/lib/feature/auth/authSlice";
+import { useDispatch } from 'react-redux';
+import { persistor } from '@/lib/store';
+import { toast } from "react-hot-toast";
 
 interface MenuItem {
   title: string;
@@ -112,21 +120,26 @@ const Navbar = ({
       ],
     },
     {
-      title: "BOOKINGS",
-      url: "#",
-      description: "Reserve your gaming spot quickly and effortlessly online.",
-    },
-    {
       title: "CONTACT",
       url: "#",
       description: "Reach out to our team for any queries or support.",
     },
   ],
   auth = {
-    login: { title: "Login", url: "/login" },
-    signup: { title: "Sign up", url: "/signup" },
+    login: { title: "LOGIN", url: "/login" },
+    signup: { title: "SIGNUP", url: "/signup" },
   },
 }: NavbarProps) => {
+
+  const dispatch = useDispatch()
+  const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    persistor.purge().then(() => {
+      toast.success("Logged out successfully");
+    });
+  }
   return (
     <SectionContainer as="header" className="py-4">
       {/* Desktop Menu */}
@@ -149,14 +162,27 @@ const Navbar = ({
             </NavigationMenu>
           </div>
         </div>
-        <div className="flex items-center gap-2" >
-          <Button asChild variant="outline" size="sm">
-            <a href={auth.login.url}>{auth.login.title}</a>
-          </Button>
-          <Button asChild size="sm">
-            <a href={auth.signup.url}>{auth.signup.title}</a>
-          </Button>
-        </div>
+        {!isAuth ? (
+          <div className="flex items-center gap-2" >
+            <Button asChild variant="outline" size="sm">
+              <a href={auth.login.url}>{auth.login.title}</a>
+            </Button>
+            <Button asChild size="sm">
+              <a href={auth.signup.url}>{auth.signup.title}</a>
+            </Button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Button asChild variant="default" size="sm">
+              <a href="/bookings">BOOKINGS</a>
+            </Button>
+            <Button onClick={handleLogout} variant="outline" size="sm">
+              LOGOUT
+            </Button>
+
+          </div>
+        )}
+
       </nav>
 
       {/* Mobile Menu */}

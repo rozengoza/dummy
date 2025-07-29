@@ -1,18 +1,45 @@
 "use client";
 
 import { useState } from "react";
-import { register } from "@/services/api/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "react-hot-toast";
+import { verifyOtp } from "@/services/api/auth";
 import axios from "axios";
 
-const VerifyEmailComponent = () => {
-    const [otp, setOtp] = useState<number | null>(null);
-    const handleVerifyOtp = () => {
+interface VerifyEmailComponentProps {
+    email: string;
+    onSuccess?: () => void;
+}
 
-    };
+const VerifyEmailComponent = ({ email, onSuccess }: VerifyEmailComponentProps) => {
+    const [otp, setOtp] = useState<string>("");
+    const [loading, setLoading] = useState(false);
+
+    const handleVerifyOtp = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!otp || otp.length !== 6) {
+            toast.error("Please enter a valid 6-digit OTP.");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const res = await verifyOtp({ 'email': email, 'otp': otp });
+            toast.success(res?.message || "Email verified successfully!");
+            if (onSuccess) onSuccess();
+        } catch (err) {
+            if (axios.isAxiosError(err)) {
+                toast.error(err?.response?.data?.message || "OTP verification failed");
+            } else {
+                toast.error("Unexpected error verifying OTP");
+            }
+        } finally {
+            setLoading(false);
+        }
+
+    }
 
     return (
         <form onSubmit={handleVerifyOtp}>
@@ -33,8 +60,8 @@ const VerifyEmailComponent = () => {
                     />
                 </div>
 
-                <Button type="submit" className="w-full">
-                    Verify OTP
+                <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? "Verifying..." : "Verify OTP"}
                 </Button>
             </div>
         </form>

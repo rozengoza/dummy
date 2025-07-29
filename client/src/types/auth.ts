@@ -10,6 +10,8 @@ export interface LoginResponse {
     user: {
         id: string;
         email: string;
+        phoneNumber?: string;
+        isEmailVerified: boolean;
     }
 }
 
@@ -22,6 +24,12 @@ export interface RegisterRequest {
 export interface RegisterResponse {
     message: string;
     userId: string;
+    user: {
+        id: string;
+        email: string;
+        phoneNumber?: string;
+        isEmailVerified: boolean;
+    }
 }
 
 export interface SendCodeRequest {
@@ -34,7 +42,7 @@ export interface SendCodeResponse {
 
 export interface VerifyOtpRequest {
     email: string;
-    code: string;
+    otp: string;
 }
 
 export interface VerifyOtpResponse {

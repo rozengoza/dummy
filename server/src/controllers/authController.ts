@@ -28,7 +28,17 @@ export const register = async (req: Request, res: Response) => {
         }
 
         const existingUser = await User.findOne(query);
-        if (existingUser) return res.status(400).send("User already exists");
+        if (existingUser) {
+            let conflictField = '';
+            if (existingUser.email === email) conflictField = 'email';
+            else if (existingUser.phoneNumber === phoneNumber) conflictField = 'phoneNumber';
+
+            return res.status(409).json({
+                message: `User with this ${conflictField} already exists`,
+                code: 409,
+                field: conflictField,
+            });
+        }
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const newUser = await User.create({
@@ -114,10 +124,24 @@ export const login = async (req: Request, res: Response) => {
 
     try {
         const user = await User.findOne({ email });
-        if (!user) return res.status(404).json({ message: "Email not found" });
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                code: 404,
+                field: "email",
+                message: "Email not found",
+            });
+        }
 
         const isPasswordMatched = await bcrypt.compare(password, user.password || "");
-        if (!isPasswordMatched) return res.status(401).json({ message: "Invalid password" });
+        if (!isPasswordMatched) {
+            return res.status(401).json({
+                success: false,
+                code: 401,
+                field: "password",
+                message: "Invalid password",
+            });
+        }
 
         const secret = process.env.JWT_SECRET;
         if (!secret) {
@@ -126,25 +150,29 @@ export const login = async (req: Request, res: Response) => {
 
         const token = jwt.sign({ email: user.email }, secret);
         return res.status(200).json({
+            success: true,
             message: "Logged in successfully",
             user,
-            isLoggedIn: true,
             authToken: token,
         });
     }
     catch (error: any) {
         console.error("Login error: ", error);
-        return res.status(500).json({ message: "Login failed " });
+        return res.status(500).json({
+            success: false,
+            code: 500,
+            message: "Internal server error",
+        });
     }
 };
 
 export const fetchUsers = async (req: Request, res: Response) => {
-  try {
-    const param = req || {};
-    console.log(param);
-    const data = await User.find();
-    return res.status(200).json(data);
-  } catch (err) {
-    return res.status(500).json({ error: "Failed to fetch users" });
-  }
+    try {
+        const param = req || {};
+        console.log(param);
+        const data = await User.find();
+        return res.status(200).json(data);
+    } catch (err) {
+        return res.status(500).json({ error: "Failed to fetch users" });
+    }
 };

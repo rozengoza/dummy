@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import VerifyEmailComponent from "./verifyEmailComponent";
 
 interface SignupComponentProps {
@@ -29,8 +30,10 @@ const SignupComponent = ({
   signupText = "Already a user?",
   signupUrl = "https://shadcnblocks.com",
 }: SignupComponentProps) => {
+
+  const router = useRouter();
   const [formValues, setFormValues] = useState({
-    name: '', // Make sure 'name' is included if your RegisterRequest type expects it
+    name: '', 
     email: '',
     password: '',
     confirmPassword: '',
@@ -38,41 +41,43 @@ const SignupComponent = ({
   });
 
   const [showVerifyOTPField, setShowVerifyOTPField] = useState<boolean>(false);
-  const [otp, setOtp] = useState<string>(''); // Changed to string for input value
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // New state for submission status
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSubmitting) return; // Prevent multiple submissions if already submitting
+    if (isSubmitting) return; 
 
-    setIsSubmitting(true); // Disable button
-
+    setIsSubmitting(true);
     try {
       const res = await register(formValues);
-      toast.success(res?.message + '. ' + 'Please verify your email to continue');
-      if (!res.user.isEmailVerified) {
+      console.log(res);
+      if (!res?.user?.isEmailVerified) {
+        toast.success(res?.message + '. ' + 'Please verify your email to continue');
         setShowVerifyOTPField(true);
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // Check if the error is specifically about duplicate email/user
-        if (err?.response?.data?.error?.includes("duplicate") || err?.response?.data?.error?.includes("exists")) {
-            toast.error("Error: This email is already registered. Please try logging in.");
+        const errorData = err?.response?.data;
+
+        if (err.response?.status === 409) {
+          // Specific handling for user already exists
+          toast.error(errorData?.message || "User already exists");
+        } else if (
+          errorData?.message?.toLowerCase().includes("duplicate") ||
+          errorData?.message?.toLowerCase().includes("exists")
+        ) {
+          toast.error("This email or phone number is already registered.");
         } else {
-            toast.error(err?.response?.data?.error || "Error signing up");
+          toast.error(errorData?.message || "Error signing up");
         }
       } else {
-        toast.error("Error signing up");
+        toast.error("Unexpected error signing up");
       }
     } finally {
-      setIsSubmitting(false); // Re-enable button regardless of success or failure
+      setIsSubmitting(false);
     }
   };
 
-  const handleVerifyOtp = async() => {
-    // Implement your OTP verification logic here
-    // Remember to handle loading state and error messages for this as well
-  };
 
   return (
     <section className="bg-muted h-screen">
@@ -84,30 +89,30 @@ const SignupComponent = ({
                 {heading && <h1 className="text-xl font-semibold">{heading}</h1>}
                 {/* Add name and phone number fields if they are part of RegisterRequest */}
                 <div className="flex w-full flex-col gap-2">
-                    <Label>Name</Label>
-                    <Input
-                        type="text"
-                        placeholder="Your Name"
-                        className="text-sm"
-                        required
-                        value={formValues.name}
-                        onChange={(e) =>
-                            setFormValues((prev) => ({ ...prev, name: e.target.value }))
-                        }
-                    />
+                  <Label>Name</Label>
+                  <Input
+                    type="text"
+                    placeholder="Your Name"
+                    className="text-sm"
+                    required
+                    value={formValues.name}
+                    onChange={(e) =>
+                      setFormValues((prev) => ({ ...prev, name: e.target.value }))
+                    }
+                  />
                 </div>
                 <div className="flex w-full flex-col gap-2">
-                    <Label>Phone Number</Label>
-                    <Input
-                        type="tel" // Use type="tel" for phone numbers
-                        placeholder="e.g., 98XXXXXXXX"
-                        className="text-sm"
-                        required
-                        value={formValues.phoneNumber}
-                        onChange={(e) =>
-                            setFormValues((prev) => ({ ...prev, phoneNumber: e.target.value }))
-                        }
-                    />
+                  <Label>Phone Number</Label>
+                  <Input
+                    type="tel" // Use type="tel" for phone numbers
+                    placeholder="e.g., 98XXXXXXXX"
+                    className="text-sm"
+                    required
+                    value={formValues.phoneNumber}
+                    onChange={(e) =>
+                      setFormValues((prev) => ({ ...prev, phoneNumber: e.target.value }))
+                    }
+                  />
                 </div>
                 <div className="flex w-full flex-col gap-2">
                   <Label>Email</Label>
@@ -154,7 +159,13 @@ const SignupComponent = ({
               </div>
             </form>
           ) : (
-            <VerifyEmailComponent />
+            <VerifyEmailComponent
+              email={formValues.email}
+              onSuccess={() => {
+                toast.success("Your email is now verified. You can log in.");
+                router.push("/login");
+              }}
+            />
           )}
           <div className="text-muted-foreground flex justify-center gap-1 text-sm">
             <p>{signupText}</p>
