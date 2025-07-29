@@ -10,14 +10,19 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import PS5Games from "@/assets/images/services/ps5.png";
+import PCGames from "@/assets/images/services/pc-games.png";
+import Netflix from "@/assets/images/services/netflix.png";
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
 
 interface GalleryItem {
   id: string;
   title: string;
   summary: string;
   url: string;
-  image: string;
+  image: string | StaticImageData;
+  rate?: number;
 }
 
 interface Gallery6Props {
@@ -27,48 +32,33 @@ interface Gallery6Props {
 }
 
 const Gallery = ({
-  heading = "Gallery",
-  demoUrl = "https://www.shadcnblocks.com",
+  heading = "Gaming Zone",
+  demoUrl = "/services",
   items = [
     {
-      id: "item-1",
-      title: "Build Modern UIs",
+      id: "playStation",
+      title: "PlayStation",
       summary:
-        "Create stunning user interfaces with our comprehensive design system.",
+        "Immerse yourself in competitive gaming on PS5 consoles within spacious, well-partitioned booths designed for both competitive edge and comfort. Enjoy high-end displays, ambient lighting, and proper ventilation, making it ideal for solo players or groups. Relax on plush seating while playing a wide selection of popular titles — including FIFA and other top-rated games — in an environment tailored for long gaming sessions.Immerse yourself in next-gen gaming on PS5 consoles within spacious, well-partitioned booths designed for both competitive edge and comfort. Enjoy high-end displays, ambient lighting, and proper ventilation, making it ideal for solo players or groups. Relax on plush seating while playing a wide selection of popular titles — including FIFA and other top-rated games — in an environment tailored for long gaming sessions.",
       url: "#",
-      image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-1.svg",
+      image: PS5Games,
+      rate: 200,
     },
     {
-      id: "item-2",
-      title: "Computer Vision Technology",
-      summary:
-        "Powerful image recognition and processing capabilities that allow AI systems to analyze, understand, and interpret visual information from the world.",
+      id: "pcGames",
+      title: "PC Games",
+      summary: "Dive into lag-free competitive gaming on high-performance PCs featuring top-tier CPUs and GPUs, high refresh rate monitors, and premium mechanical keyboards and gaming mice. Enjoy ultra-low latency, consistently high FPS, blazing-fast internet, and uninterrupted sessions with power backup. Immerse yourself in every game with high-fidelity sound and RGB-lit, fully-optimized setups designed for serious gamers.",
       url: "#",
-      image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-1.svg",
+      image: PCGames,
+      rate: 150,
     },
     {
-      id: "item-3",
-      title: "Machine Learning Automation",
-      summary:
-        "Self-improving algorithms that learn from data patterns to automate complex tasks and make intelligent decisions with minimal human intervention.",
+      id: "netflixRoom",
+      title: "Netflix & Chill",
+      summary: "Unwind in a private, soundproof Netflix room designed for couples or groups of friends. Enjoy your favorite shows and movies on high-end smart TVs with immersive surround sound, all while relaxing on spacious, ultra-comfy sofas. The room is fully air-conditioned for a chill viewing experience and comes with optional snacks and drinks, making it the perfect escape for movie nights, date nights, or binge sessions.",
       url: "#",
-      image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-1.svg",
-    },
-    {
-      id: "item-4",
-      title: "Predictive Analytics",
-      summary:
-        "Advanced forecasting capabilities that analyze historical data to predict future trends and outcomes, helping businesses make data-driven decisions.",
-      url: "#",
-      image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-1.svg",
-    },
-    {
-      id: "item-5",
-      title: "Neural Network Architecture",
-      summary:
-        "Sophisticated AI models inspired by human brain structure, capable of solving complex problems through deep learning and pattern recognition.",
-      url: "#",
-      image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-1.svg",
+      image: Netflix,
+      rate: 300,
     },
   ],
 }: Gallery6Props) => {
@@ -101,7 +91,7 @@ const Gallery = ({
               href={demoUrl}
               className="group flex items-center gap-1 text-sm font-medium md:text-base lg:text-lg"
             >
-              Book a demo
+              Make a Booking
               <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1" />
             </a>
           </div>
@@ -171,9 +161,13 @@ const Gallery = ({
                   <div className="text-muted-foreground mb-8 line-clamp-2 text-sm md:mb-12 md:text-base lg:mb-9">
                     {item.summary}
                   </div>
-                  <div className="flex items-center text-sm">
-                    Read more{" "}
-                    <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
+                  <div className="mt-auto flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="text-lg font-semibold">
+                      NPR. {item?.rate}/hr
+                    </div>
+                    <Button size="sm" variant="secondary" className="w-fit">
+                      Make a Booking
+                    </Button>
                   </div>
                 </a>
               </CarouselItem>
