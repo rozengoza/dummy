@@ -10,6 +10,8 @@ const bookingSchema = new mongoose.Schema({
     startTime: { type: Date, required: true },
     endTime: { type: Date, required: true },
     createdAt: { type: Date, default: Date.now },
+    isApproved: { type: Boolean, default: false},
+    isPaymentSuccessful: { type: Boolean, default: false},
 } , {
     timestamps: true,
 });

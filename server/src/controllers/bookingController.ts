@@ -10,9 +10,15 @@ export const createBooking = async (req: Request, res: Response) => {
         return res.status(400).json({ success: false, message: "Missing required fields" });
     }
 
+
+
     const start = new Date(startTime);
     const end = new Date(endTime);
     const now = new Date();
+
+    const maxBookingDate = new Date();
+    maxBookingDate.setDate(now.getDate() + 7);
+
     if (start < now) {
         return res.status(400).json({
             success: false,
@@ -20,17 +26,24 @@ export const createBooking = async (req: Request, res: Response) => {
         });
     }
 
+    if (start > maxBookingDate) {
+        return res.status(400).json({
+            success: false,
+            message: "Bookings are only allowed within the next 7 days"
+        })
+    }
+
     if (start >= end) {
         return res.status(400).json({ success: false, message: "Invalid time range" });
     }
 
-    const MAX_DURATION_MINUTES  = 120;
+    const MAX_DURATION_MINUTES = 120;
     const duration = (end.getTime() - start.getTime()) / (1000 * 60);
 
-    if (duration > MAX_DURATION_MINUTES ) {
+    if (duration > MAX_DURATION_MINUTES) {
         return res.status(400).json({
             success: false,
-            message: `Bookings cannot exceed ${MAX_DURATION_MINUTES } minutes.`,
+            message: `Bookings cannot exceed ${MAX_DURATION_MINUTES} minutes.`,
         });
     }
 
@@ -46,6 +59,25 @@ export const createBooking = async (req: Request, res: Response) => {
         const service = await ProductServices.findById(serviceId);
         if (!service) {
             return res.status(404).json({ success: false, message: "Service not found" });
+        }
+
+        const MAX_BOOKINGS_PER_DAY = 2;
+
+        const dayStart = new Date(start);
+        dayStart.setHours(0, 0, 0, 0);
+        const dayEnd = new Date(start);
+        dayEnd.setHours(23, 59, 59, 999);
+
+        const userBookingsToday = await Booking.countDocuments({
+            userId,
+            startTime: { $gte: dayStart, $lte: dayEnd }
+        });
+
+        if (userBookingsToday >= MAX_BOOKINGS_PER_DAY) {
+            return res.status(429).json({
+                success: false,
+                message: `Booking limit reached. You can only book ${MAX_BOOKINGS_PER_DAY} slot(s) per day`,
+            });
         }
 
         const overlapCondition = {
@@ -83,7 +115,9 @@ export const createBooking = async (req: Request, res: Response) => {
             userPhone: user?.phoneNumber,
             userId,
             startTime,
-            endTime
+            endTime,
+            isPaymentSuccessful: false,
+            isApproved: false,
         });
 
         return res.status(201).json({
