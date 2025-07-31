@@ -10,8 +10,6 @@ const bookingSchema = new mongoose.Schema({
     startTime: { type: Date, required: true },
     endTime: { type: Date, required: true },
     createdAt: { type: Date, default: Date.now },
-    userPhone: {type: String },
-    userName: { type: String, required: true },
 } , {
     timestamps: true,
 });
