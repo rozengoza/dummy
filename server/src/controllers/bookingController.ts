@@ -20,17 +20,17 @@ export const createBooking = async (req: Request, res: Response) => {
         });
     }
 
-    if (isNaN(start.getTime()) || isNaN(end.getTime()) || start >= end) {
+    if (start >= end) {
         return res.status(400).json({ success: false, message: "Invalid time range" });
     }
 
-    const maxDurationMinutes = 120;
+    const MAX_DURATION_MINUTES  = 120;
     const duration = (end.getTime() - start.getTime()) / (1000 * 60);
 
-    if (duration > maxDurationMinutes) {
+    if (duration > MAX_DURATION_MINUTES ) {
         return res.status(400).json({
             success: false,
-            message: `Bookings cannot exceed ${maxDurationMinutes} minutes.`,
+            message: `Bookings cannot exceed ${MAX_DURATION_MINUTES } minutes.`,
         });
     }
 
@@ -48,14 +48,16 @@ export const createBooking = async (req: Request, res: Response) => {
             return res.status(404).json({ success: false, message: "Service not found" });
         }
 
+        const overlapCondition = {
+            $or: [{ startTime: { $lt: end }, endTime: { $gt: start } }]
+        };
+
         const overlappingBookings = await Booking.countDocuments({
             serviceId,
-            $or: [
-                { startTime: { $lt: end }, endTime: { $gt: start } }
-            ]
+            ...overlapCondition
         });
 
-        if (overlappingBookings >= Number(service.numberOfDevices)) {
+        if (overlappingBookings >= service.numberOfDevices.valueOf()) {
             return res.status(409).json({
                 success: false,
                 message: "No available devices at the selected time",
@@ -65,9 +67,7 @@ export const createBooking = async (req: Request, res: Response) => {
         const userOverlappingBooking = await Booking.findOne({
             userId,
             serviceId,
-            $or: [
-                { startTime: { $lt: end }, endTime: { $gt: start } }
-            ]
+            ...overlapCondition
         });
 
         if (userOverlappingBooking) {
