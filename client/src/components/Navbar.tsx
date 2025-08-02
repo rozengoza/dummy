@@ -1,29 +1,11 @@
-'use client';
+"use client";
 
-import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
+import { Computer, Gamepad2, Tv, Coffee, Popcorn, Package, Menu } from "lucide-react";
 import { SectionContainer } from "./layout/SectionContainer";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
+import { Button } from "./ui/button";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuLink, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "./ui/navigation-menu";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import LevelUpGamingLogoSmall from "@/assets/images/Level-Up-Gaming-Logo-Small.jpeg";
 import Image from "next/image";
@@ -78,25 +60,25 @@ const Navbar = ({
         {
           title: "PC GAMES",
           description: "Experience lightning-fast gaming with our top-tier PC rigs.",
-          icon: <Book className="size-5 shrink-0" />,
+          icon: <Computer className="size-5 shrink-0" />,
           url: "#",
         },
         {
           title: "PS5",
           description: "Dive into next-gen worlds with our cutting-edge PlayStation setups.",
-          icon: <Trees className="size-5 shrink-0" />,
+          icon: <Gamepad2 className="size-5 shrink-0" />,
           url: "#",
         },
         {
           title: "NETFLIX & CHILL",
           description: "Unwind in style with our immersive movie sanctuary and premium loungers.",
-          icon: <Sunset className="size-5 shrink-0" />,
+          icon: <Tv className="size-5 shrink-0" />,
           url: "#",
         },
         {
           title: "RENTALS",
           description: "Flexible gaming station rentals tailored to your schedule and needs.",
-          icon: <Zap className="size-5 shrink-0" />,
+          icon: <Package className="size-5 shrink-0" />,
           url: "#",
         },
       ],
@@ -108,13 +90,13 @@ const Navbar = ({
         {
           title: "SNACKS & DRINKS",
           description: "Power up with our delicious snacks and refreshing beverages.",
-          icon: <Zap className="size-5 shrink-0" />,
+          icon: <Popcorn className="size-5 shrink-0" />,
           url: "#",
         },
         {
           title: "LEVEL UP CAFETERIA",
           description: "Your ultimate fuel stop for gaming sessions and chillouts alike.",
-          icon: <Sunset className="size-5 shrink-0" />,
+          icon: <Coffee className="size-5 shrink-0" />,
           url: "#",
         },
       ],
@@ -130,7 +112,6 @@ const Navbar = ({
     signup: { title: "SIGNUP", url: "/signup" },
   },
 }: NavbarProps) => {
-
   const dispatch = useDispatch()
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
 
@@ -140,8 +121,10 @@ const Navbar = ({
       toast.success("Logged out successfully");
     });
   }
+
   return (
     <SectionContainer as="header" className="py-4">
+
       {/* Desktop Menu */}
       <nav className="hidden justify-around lg:flex">
         <div className="flex items-center gap-6">
@@ -182,9 +165,7 @@ const Navbar = ({
 
           </div>
         )}
-
       </nav>
-
       {/* Mobile Menu */}
       <div className="block lg:hidden">
         <div className="flex items-center justify-between">
@@ -228,7 +209,7 @@ const Navbar = ({
         </div>
       </div>
     </SectionContainer>
-  );
+  )
 };
 
 const renderMenuItem = (item: MenuItem) => {

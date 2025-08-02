@@ -16,7 +16,7 @@ import Netflix from "@/assets/images/services/netflix.png";
 import Image from "next/image";
 import type { StaticImageData } from "next/image";
 
-interface GalleryItem {
+interface ServicesItem {
   id: string;
   title: string;
   summary: string;
@@ -25,13 +25,13 @@ interface GalleryItem {
   rate?: number;
 }
 
-interface Gallery6Props {
+interface ServicesBookingComponentProps {
   heading?: string;
   demoUrl?: string;
-  items?: GalleryItem[];
+  items?: ServicesItem[];
 }
 
-const Gallery = ({
+const ServicesBookingComponent = ({
   heading = "Gaming Zone",
   demoUrl = "/services",
   items = [
@@ -61,7 +61,7 @@ const Gallery = ({
       rate: 300,
     },
   ],
-}: Gallery6Props) => {
+}: ServicesBookingComponentProps) => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
@@ -179,4 +179,4 @@ const Gallery = ({
   );
 };
 
-export { Gallery };
+export { ServicesBookingComponent };
